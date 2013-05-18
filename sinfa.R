@@ -1,8 +1,25 @@
 ## some experiments trying to reproduce Wang and Bilger
 
-x <- read.csv("wang-bilger-table6.csv", row.names=1)
-f <- read.csv("wang-bilger-features.csv", row.names=1)
-cons <- colnames(x)
+read.wang.bilger <- function() {
+  assign("x", read.csv("wang-bilger-table6.csv", row.names=1), envir=.GlobalEnv)
+  assign("f", read.csv("wang-bilger-features.csv", row.names=1), envir=.GlobalEnv)
+  cons <- colnames(x)
+}
+
+read.natalie <- function() {
+  global <- function(x, y) assign(x, y, env=.GlobalEnv)
+  f <- read.table("data/features.txt")
+  f <- data.frame(t(f))                 # transpose
+  global("conditions", c("bao", "bat", "con", "hel", "hoo", "niq", "rub", "sur", "tap"))
+  g <- function(x) {
+    x <- read.csv(sprintf("data/cm_ao_noise - %s.csv", toupper(x)), row.names=1)
+    x[-nrow(x),-ncol(x)]           # ditch totals
+  }
+  x <- lapply(conditions, g)
+  names(x) <- conditions
+  global("x", x)
+  global("f", f)
+}
 
 ## cond can be multi-dimensional, i.e., an array of nphones x nfeatures
 ## cond can also be NULL, then this is just entropy()
@@ -80,8 +97,7 @@ run.sinfa <- function(x, f, nmax=1) {
   while(n<=nmax) {
     res <- data.frame(t(sapply(f.names, g)))
     res$rel <- res$mut / res$ent
-    cat(sprintf("Iteration %d: keeping %s constant\n", n,
-                ifelse(cond.names==NULL, "nothing", cond.pasted.names)))
+    cat(sprintf("Iteration %d: keeping %s constant\n", n, cond.pasted.names))
     print(res)
     max.fea <- which.max(res$rel)
     cond.names <- append(cond.names, f.names[max.fea])
