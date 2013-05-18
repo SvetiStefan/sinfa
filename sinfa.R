@@ -1,4 +1,5 @@
-## some experiments trying to reproduce Wang and Bilger
+## some experiments trying to reproduce the SINFA procedure from Wang and Bilger (1973)
+## (c) 2013 David A. van Leeuwen
 
 read.wang.bilger <- function() {
   assign("x", read.csv("wang-bilger-table6.csv", row.names=1), envir=.GlobalEnv)
