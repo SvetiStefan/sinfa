@@ -1,5 +1,18 @@
-## some experiments trying to reproduce the SINFA procedure from Wang and Bilger (1973)
-## (c) 2013 David A. van Leeuwen
+## sinfa.R: some experiments trying to reproduce the SINFA procedure from Wang and Bilger (1973)
+## Copyright (c) 2013 by David A. van Leeuwen
+
+## This program is free software: you can redistribute it and/or modify
+##     it under the terms of the GNU General Public License as published by
+##     the Free Software Foundation, version 3 of the License.
+
+##     This program is distributed in the hope that it will be useful,
+##     but WITHOUT ANY WARRANTY; without even the implied warranty of
+##     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##     GNU General Public License for more details.
+
+##     You should have received a copy of the GNU General Public License
+##     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 
 read.wang.bilger <- function() {
   assign("x", read.csv("wang-bilger-table6.csv", row.names=1), envir=.GlobalEnv)
