@@ -20,13 +20,13 @@ read.wang.bilger <- function() {
   cons <- colnames(x)
 }
 
-read.natalie <- function() {
+read.natalie <- function(av="ao", noise="noise") {
   global <- function(x, y) assign(x, y, env=.GlobalEnv)
   f <- read.table("data/features.txt")
   f <- data.frame(t(f))                 # transpose
   global("conditions", c("bao", "bat", "con", "hel", "hoo", "niq", "rub", "sur", "tap"))
   g <- function(x) {
-    x <- read.csv(sprintf("data/cm_ao_noise - %s.csv", toupper(x)), row.names=1)
+    x <- read.csv(sprintf("data/cm_%s_%s - %s.csv", av, noise, toupper(x)), row.names=1)
     x[-nrow(x),-ncol(x)]           # ditch totals
   }
   x <- lapply(conditions, g)
